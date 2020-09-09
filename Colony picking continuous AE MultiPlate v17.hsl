@@ -1,0 +1,218 @@
+ namespace _Method { #include "HSLTrcLib.hsl" } 
+ namespace _Method { #include "HSLML_STARLib.hsl" } 
+ namespace _Method { #include "HSLSeqLib.hsl" } 
+ namespace _Method { #include "HSLStrLib.hsl" } 
+ namespace _Method { #include "HSLTimLib.hsl" } 
+ namespace _Method { #include "HSLFileDirectoryLib.hsl" } 
+ namespace _Method { #include "HSLFilLib.hsl" } 
+ namespace _Method { #include "easyPickIILibrary\\easyPickII_Steps.hs_" } 
+ namespace _Method { #include "easyPickIILibrary\\easyPickII_Library.hsl" } 
+ namespace _Method { #include "load_instructionsv2.hs_" } 
+ namespace _Method { #include "HSLUtilLib2.hsl" } 
+ namespace _Method { #include "Get_Serial_Number.hs_" } 
+ namespace _Method { #include "HSLMthLib.hsl" } 
+ namespace _Method { #include "Park_96head.hs_" } 
+ namespace _Method { #include "ASWStandard\\TraceLevel\\TraceLevel.hsl" } 
+ namespace _Method { #include "NTRDirectUse.hs_" } 
+ namespace _Method { #include "MetrologicUtilitiesAdvanced_TGAC.hs_" } 
+ namespace _Method { #include "A1 to A01 and vice versa.hs_" } 
+ namespace _Method { #include "StepTracker\\StepTracker.hs_" } 
+#include "Colony picking continuous AE MultiPlate v15.res"
+ namespace _Method { #include "MetrologicUtilitiesAdvanced_TGAC.hs_" } 
+/* {{ 2 "LibraryInsertLine" "" */ // }} ""
+variable _blnSimulation;
+variable _blnAbortFlag;
+variable _strMappingFilepath;
+variable _intMaxColoniesPerWell;
+variable _intNumberOfDestinationPlates;
+variable _blnConfigurationWithDialogs;
+variable _strLightSource;
+variable _intLightIntensity;
+variable _blnShowCameraLiveView;
+variable _strTipCounterNTR300;
+variable _blnPipettingStarted;
+variable _strLightSourceTop;
+variable _intMaxNumberOfChannelsForPicking;
+variable _intNoOfChannels;
+variable _strCameraSettings;
+variable _strColoniesSettings;
+sequence seqColonySequence;
+variable _arrMappingDWPBarcode[];
+variable _arrMappingDWPWell[];
+variable _strColonyPlateDescription;
+variable _intNumberOfColonyPlates;
+variable _fltDWP24GripOpenWidthCORE;
+variable _fltColonyPlateLidGripWidthCORE;
+variable _fltColonyPlateGripOpenWidthCORE;
+variable _fltDWP24LidGripOpenWidthCORE;
+variable _fltColonyPlateGripHeightCORE;
+variable _fltColonyPlateGripWidthCORE;
+variable _fltColonyPlateLidGripOpenWidthCORE;
+variable _fltDWP24LidGripHeightCORE;
+variable _fltDWP24GripWidthCORE;
+variable _fltDWP24GripHeightCORE;
+variable _fltDWP24LidGripWidthCORE;
+variable _fltColonyPlateLidGripHeightCORE;
+variable _strColonyPlateID;
+variable _arrMappingColonyPlateID[];
+variable _arrMappingColonyPlateWell[];
+variable _strMappingFileName;
+variable _arrColonyPlateIDs[];
+variable _arrColonyPlateIDFilesExist[];
+variable _arrIntChannelToWellMapping[];
+variable _arrColonyPlateIDSuccessfullyPicked[];
+sequence _seqMediaTroughs;
+variable _fltMediaTroughLidGripHeightCORE;
+variable _fltMediaTroughLidGripWidthCORE;
+variable _fltMediaTroughLidGripOpenWidthCORE;
+variable _intMediaPipettingCycles;
+variable _fltVolumeMediaPipetting;
+variable _blnPipettingFinished;
+global device ML_STAR ("Colony picking continuous AE MultiPlate v15.lay", "ML_STAR", hslTrue);
+variable intSourceWells;
+variable strDestinationPlateDesc;
+variable strSourcePlateDesc;
+variable intDestinationWells;
+variable intMaxSourcePlates;
+variable intMaxDestinationPlates;
+variable intDestinationGripWidthCORE;
+variable intDestinationGripHeightCORE;
+variable intDestinationLidGripHeightCORE;
+variable intSourceLidGripHeightCORE;
+variable intDestinationGripOpenWidthCORE;
+variable intDestinationLidGripOpenWidthCORE;
+variable intSourceLidGripOpenWidthCORE;
+variable intSourceGripWidthCORE;
+variable intSourceGripOpenWidthCORE;
+variable intSourceGripHeightCORE;
+variable intSourceLidGripWidthCORE;
+variable intDestinationLidGripWidthCORE;
+variable intDestinationMediaVolume;
+variable intSourceStackHeight;
+variable intDestinationStackHeight;
+variable strDestinationLabwareName;
+dialog customDialog2D9AEA7EE6074b3fABDED5E4628E6EC0;
+dialog customDialog942C778B85D0429eB0C0B67D9262CCB0;
+variable strFilePath;
+/* {{ 2 "VariableInsertLine" "" */ // }} ""
+// {{ 2 "TemplateIncludeBlock" ""
+ namespace _Method { #include "HSLMETEDLib.hs_" } 
+ namespace _Method { #include "HSLMECCLib.hs_" } 
+ namespace _Method { #include "HSLPTLLib.hsl" } 
+ namespace _Method { #include "HSLSTCCLib.hs_" } 
+// }} ""
+// {{{ 2 "LocalSubmethodInclude" ""
+ namespace _Method {  #include __filename__ ".sub"  } 
+// }} ""
+/* {{ 2 "ProcessInsertLine" "" */ // }} ""
+// {{{ 5 "main" "Begin"
+namespace _Method { method main(  ) void {
+// }} ""
+// {{ 5 "main" "InitLocals"
+// }} ""
+// {{ 2 "AutoInitBlock" ""
+PTL::SetWashingStateDefault("RinseTime1", 5);
+PTL::SetWashingStateDefault("SoakTime1", 5);
+PTL::SetWashingStateDefault("FlowRate1", 11);
+PTL::SetWashingStateDefault("RinseTime2", 0);
+PTL::SetWashingStateDefault("SoakTime2", 0);
+PTL::SetWashingStateDefault("FlowRate2", 11);
+PTL::SetWashingStateDefault("DrainingTime", 10);
+PTL::SetWashingStateDefault("StartWashLiquid", 0);
+PTL::SetLoadingStateDefault("RecoveryOptionContinue", hslTrue);
+PTL::SetLoadingStateDefault("RecoveryOptionExclude", hslTrue);
+PTL::SetLoadingStateDefault("RecoveryOptionDefault", 0);
+PTL::SetLoadingStateDefault("KitLotCheckEnabled", hslFalse);
+EASYPICKII_STEPS::_InitLibrary();
+LOAD_INSTRUCTIONSV2::_InitLibrary();
+GET_SERIAL_NUMBER::_InitLibrary();
+PARK_96HEAD::_InitLibrary();
+NTRDIRECTUSE::_InitLibrary();
+METROLOGICUTILITIESADVANCED_TGAC::_InitLibrary();
+A1_TO_A01_AND_VICE_VERSA::_InitLibrary();
+STEPTRACKER::_InitLibrary();
+::RegisterAbortHandler( "OnAbort");
+// }} ""
+// {{ 1 1 0 "742f73e7_420d_4bfb_a0388073a15b5fb4" "{F07B0071-8EFC-11d4-A3BA-002035848439}"
+MECC::TraceComment(Translate("Copyright (C) by HAMILTON GB\nAll rights reserved.\nProject : The Genome Analysis Centre (TGAC)\nDescription : This method fills DWPs with media from trough with the 96 head, then picks colonies from 8 well plates and dispenses them to the DWPs\nSoftware Version : 4.4\nRevision history:\n2016-01-18 J Titchmarsh - created"));
+// }} ""
+// {{ 2 1 0 "c2e20af4_57d3_4701_92252460318e6708" "{F07B0071-8EFC-11d4-A3BA-002035848439}"
+
+// }} ""
+// {{ 3 1 0 "63713b78_b17d_4162_a1231864f96074f8" "{F07B0071-8EFC-11d4-A3BA-002035848439}"
+
+// }} ""
+// {{ 4 1 0 "40685c7b_9bdd_48de_96e52d33ed291cbb" "{F07B0071-8EFC-11d4-A3BA-002035848439}"
+
+// }} ""
+// {{ 5 1 0 "2c57d7e1_cf67_46ae_a5cb7890a511a418" "{B31F3543-5D80-11d4-A5EB-0050DA737D89}"
+strFilePath = Translate("");
+// }} ""
+// {{ 6 1 0 "6baa1af9_3b08_450f_adfe085ac7fa1e05" "{998A7CCC-4374-484D-A6ED-E8A4F0EB71BA}"
+customDialog942C778B85D0429eB0C0B67D9262CCB0.InitCustomDialog( "6baa1af9_3b08_450f_adfe085ac7fa1e05" );
+customDialog942C778B85D0429eB0C0B67D9262CCB0.ShowCustomDialog();
+strFilePath = customDialog942C778B85D0429eB0C0B67D9262CCB0.GetCustomDialogProperty( "path1.Path" );
+// }} ""
+// {{ 7 1 0 "fd5a9ab1_de40_443e_b883317329fe99ea" "ML_STAR:{1C0C0CB0-7C87-11D3-AD83-0004ACB1DCB2}"
+{
+	variable arrRetValues[];
+	arrRetValues = ML_STAR._1C0C0CB0_7C87_11D3_AD83_0004ACB1DCB2("fd5a9ab1_de40_443e_b883317329fe99ea"); // Initialize
+}
+// }} ""
+// {{ 8 1 0 "bbde1ba8_850c_4c94_97d75ce22006a964" "ML_STAR:{2931977C-E32F-4471-8B68-F31ED1A866F5}"
+{
+	variable arrRetValues[];
+	arrRetValues = ML_STAR._2931977C_E32F_4471_8B68_F31ED1A866F5("bbde1ba8_850c_4c94_97d75ce22006a964"); // LockFrontCover
+}
+// }} ""
+// {{ 9 1 0 "fe4df199_102d_4272_8a18878f8f4ffe48" "{998A7CCC-4374-484D-A6ED-E8A4F0EB71BA}"
+customDialog2D9AEA7EE6074b3fABDED5E4628E6EC0.InitCustomDialog( "fe4df199_102d_4272_8a18878f8f4ffe48" );
+customDialog2D9AEA7EE6074b3fABDED5E4628E6EC0.ShowCustomDialog();
+// }} ""
+// {{ 10 1 0 "2b689d09_58f0_45c9_891eb4f5b22f0971" "ML_STAR:{2931977C-E32F-4471-8B68-F31ED1A866F5}"
+{
+	variable arrRetValues[];
+	arrRetValues = ML_STAR._2931977C_E32F_4471_8B68_F31ED1A866F5("2b689d09_58f0_45c9_891eb4f5b22f0971"); // LockFrontCover
+}
+// }} ""
+// {{ 11 1 0 "68164bfa_f5d8_4ef2_944989b1bbd16972" "{F07B0071-8EFC-11d4-A3BA-002035848439}"
+
+// }} ""
+// {{{ 12 1 0 "6aa45e8a_0ecc_450a_9e1efd81e487f174" "{7C4EF7A7-39BE-406a-897F-71F3A35B4093}"
+_PlateChoice();
+// }} ""
+// {{{ 13 1 0 "f3826584_f158_47ef_98c950fbd748a3c2" "{7C4EF7A7-39BE-406a-897F-71F3A35B4093}"
+A_UserInput();
+// }} ""
+// {{{ 14 1 0 "c2be6c3d_2320_42ac_be0a7f54e38ecfd9" "{7C4EF7A7-39BE-406a-897F-71F3A35B4093}"
+B_Definitions();
+// }} ""
+// {{{ 15 1 0 "6f9527e0_29ca_42b4_b3180237342020d6" "{7C4EF7A7-39BE-406a-897F-71F3A35B4093}"
+C_Initialise();
+// }} ""
+// {{{ 16 1 0 "91d45fb7_d5e7_428d_913f853f911336d8" "{7C4EF7A7-39BE-406a-897F-71F3A35B4093}"
+D_LoadInstructions();
+// }} ""
+// {{{ 17 1 0 "aa7c8dfb_d5a4_4d7a_b751d91ff31a02bb" "{7C4EF7A7-39BE-406a-897F-71F3A35B4093}"
+E_ColonyPicking();
+// }} ""
+// {{{ 18 1 0 "21138aef_ff0d_4579_bccb5ab596700e11" "{7C4EF7A7-39BE-406a-897F-71F3A35B4093}"
+F_Output();
+// }} ""
+// {{{ 19 1 0 "df803fe6_c23b_4a3e_a903111a793a79e9" "{7C4EF7A7-39BE-406a-897F-71F3A35B4093}"
+G_DeInitialise();
+// }} ""
+// {{ 2 "AutoExitBlock" ""
+EASYPICKII_STEPS::_ExitLibrary();
+LOAD_INSTRUCTIONSV2::_ExitLibrary();
+GET_SERIAL_NUMBER::_ExitLibrary();
+PARK_96HEAD::_ExitLibrary();
+NTRDIRECTUSE::_ExitLibrary();
+METROLOGICUTILITIESADVANCED_TGAC::_ExitLibrary();
+A1_TO_A01_AND_VICE_VERSA::_ExitLibrary();
+STEPTRACKER::_ExitLibrary();
+// }} ""
+// {{{ 5 "main" "End"
+} }
+// }} ""
+// $$author=Hamilton$$valid=0$$time=2020-04-21 13:30$$checksum=68937e36$$length=087$$
